@@ -48,6 +48,17 @@ Install VIC Product OVA
     \   ${ip}=  Run Keyword If  ${status}  Fetch From Right  ${line}  ${SPACE}
     \   ${ova-ip}=  Run Keyword If  ${status}  Set Variable  ${ip}  ELSE  Set Variable  ${ova-ip}
 
+<<<<<<< HEAD
+    Log To Console  \nWaiting for Getting Started Page to Come Up...
+    :FOR  ${i}  IN RANGE  10
+    \   ${rc}  ${out}=  Run And Return Rc And Output  curl -k -w "\%{http_code}\\n" --header "Content-Type: application/json" -X POST --data '{"target":"%{TEST_URL}:443","user":"%{TEST_USERNAME}","password":"%{TEST_PASSWORD}"}' https://${ova-ip}:9443/register
+    \   Exit For Loop If  '200' in '''${out}'''
+    \   Sleep  5s
+    Log To Console  ${rc}
+    Log To Console  ${out}
+    Should Contain  ${out}  200
+    Set Environment Variable  OVA_IP  ${ova-ip}
+=======
     Wait For Register Page  ${ova-ip}
 
     # set env var for ova ip
@@ -64,6 +75,7 @@ Install VIC Product OVA
     # wait for component services to get started
     Wait For Online Components  ${ova-ip}
     Wait For SSO Redirect  ${ova-ip}
+>>>>>>> origin/master
 
     [Return]  ${ova-ip}
 
